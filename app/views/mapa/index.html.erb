@@ -1,0 +1,47 @@
+<div class="header">
+  <div class="line1">
+    <div class="container">
+      <div class="col1"></div>
+      <div class="col2"></div>
+    </div>
+  </div>
+  <div class="line2"></div>
+  <div class="logo">
+    <img src="images/logo.png" alt="IFRN">
+    <h1>Corrente da Ciência</h1>
+  </div>
+</div>
+
+<div class="container-map">
+  <div id="map"></div>
+  <div id="footer">
+    <span>
+      IP: <%= @ip %> | Latitude: <%= @lat %> | Longitude: <%= @long %> | <%= @city %> - <%= @uf %> - <%= @country %> <i class="ion-ios-location-outline"></i>
+    </span>
+  </div>
+</div>
+
+<% content_for :javascript do %>
+    <script type='text/javascript'>
+      $(document).ready()
+      {
+        handler = Gmaps.build('Google');
+        handler.buildMap({provider: {}, internal: {id: 'map'}}, function () {
+          markers = handler.addMarkers([
+            {
+              "lat": <%= @lat %>,//-5.1875,
+              "lng": <%= @long %>//-37.3442,
+//              "picture": {
+//                "url": "http://people.mozilla.com/~faaborg/files/shiretoko/firefoxIcon/firefox-32.png",
+//                "width": 32,
+//                "height": 32
+//              },
+              //"infowindow": "hello!"
+            }
+          ]);
+          handler.bounds.extendWith(markers);
+          handler.fitMapToBounds();
+        });
+      };
+    </script>
+<% end %>

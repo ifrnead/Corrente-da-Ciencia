@@ -1,0 +1,138 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    font-family: "Josefin Sans", sans-serif;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+
+/*--------*/
+/* Header */
+/*--------*/
+
+.header {
+    width: 100%;
+    height: 95px;
+    background: #323a44;
+    top: 0;
+    border-bottom: 3px solid #c0ec19;
+    position: fixed;
+    color: #FFF;
+    z-index: 1000;
+}
+
+.header .line1 {
+    height: 36px;
+    line-height: 36px;
+}
+
+.header .container {
+    position: relative;
+}
+
+.container {
+    width: 1170px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.header .col1 {
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-right: 180px;
+    display: block;
+    text-align: right;
+}
+
+.header .col2 {
+    position: absolute;
+    left: 50%;
+    width: 50%;
+    padding-left: 180px;
+    position: absolute;
+    display: block;
+}
+
+.header .logo {
+    position: absolute;
+    left: 50%;
+    top: 5px;
+    margin-left: -116px;
+    z-index: 100;
+}
+
+.header .logo img{
+    height: 82px;
+    float: left;
+    margin-right: 25px;
+}
+.header .logo h1{
+    margin: 0;
+}
+
+/*--------*/
+/*  Map   */
+/*--------*/
+
+.container-map{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#map {
+    position: absolute;
+    left: 0;
+    top: 95px;
+    right: 0;
+    bottom: 30px;
+}
+
+/*--------*/
+/* Footer */
+/*--------*/
+
+#footer {
+    background: #373f48;
+    height: 30px;
+    line-height: 30px;
+    border-top: 3px solid #c0ec19;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 12px;
+    color: #FFF;
+    text-align: center;
+    padding-left: 10px;
+}
