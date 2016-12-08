@@ -1,3 +1,3 @@
 class Usuario < ActiveRecord::Base
-  validates :ip, uniqueness: true
+  #validates :ip, uniqueness: true
 end

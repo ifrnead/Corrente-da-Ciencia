@@ -15,9 +15,34 @@
 <div class="container-map">
   <div id="map"></div>
   <div id="footer">
-    <span>
-      IP: <%= @ip %> | Latitude: <%= @lat %> | Longitude: <%= @long %> | <%= @city %> - <%= @uf %> - <%= @country %> <i class="ion-ios-location-outline"></i>
-    </span>
+    <span>IP: <%= @ip %> | Latitude: <span id="footer-lat"><%= @lat %></span> | Longitude: <span id="footer-lng"><%= @long %></span> | <span id="footer-city"><%= @city %> - <%= @uf %></span> - <span id="footer-country"><%= @country %></span> <i class="ion-ios-location-outline"></i></span>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Caro visitante,</h4>
+      </div>
+      <div class="modal-body">
+        <p></p>
+        <p>Este projeto de pesquisa, denominado <b>Corrente da Ciência</b>,
+          visa o monitoramento e análise de dados da propagação de "correntes" em redes sociais,
+          com ênfase inicial no What'sApp. Para isso, é muito importante que você permita a coleta
+          da geolocalização (caixa de diálogo que aparecerá a seguir).</p>
+        <p>Assim, será possível gerar um mapa que ilustre a disseminação dessa mensagem.</p>
+        <p>Certos de vossa compreensão, agradecemos a participação nesta pesquisa!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Continuar</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -25,22 +50,52 @@
     <script type='text/javascript'>
       $(document).ready()
       {
-        handler = Gmaps.build('Google');
-        handler.buildMap({provider: {}, internal: {id: 'map'}}, function () {
-          markers = handler.addMarkers([
-            {
-              "lat": <%= @lat %>,//-5.1875,
-              "lng": <%= @long %>//-37.3442,
-//              "picture": {
-//                "url": "http://people.mozilla.com/~faaborg/files/shiretoko/firefoxIcon/firefox-32.png",
-//                "width": 32,
-//                "height": 32
-//              },
-              //"infowindow": "hello!"
-            }
-          ]);
-          handler.bounds.extendWith(markers);
-          handler.fitMapToBounds();
+        $('#myModal').modal('show');
+        $('#myModal').on('hidden.bs.modal', function () {
+          buildMap();
+        });
+      };
+
+      var handler = Gmaps.build('Google');
+      function buildMap(){
+        handler.buildMap({ internal: {id: 'map'} }, function(){
+          // be aware chrome >= 50 requires https for geolocation to work
+          if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(displayOnMap);
+          }
+        }); // TODO Caso se recuse a compartilhar a geolocalização
+      }
+
+      function displayOnMap(position){
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+
+        $('#footer-lat').text(lat);
+        $('#footer-lng').text(lng);
+
+        var marker = handler.addMarker({
+          lat: lat,
+          lng: lng
+        });
+        handler.map.centerOn(marker);
+        //handler.bounds.extendWith(markers);
+        //handler.fitMapToBounds();
+
+        $.ajax({
+          type: 'GET',
+          url: '/location',
+          data: { lat: lat, lng: lng },
+          contentType: 'application/json',
+          dataType: 'json',
+          success:function(data) {
+            console.log(data);
+            var city = data['data']['city'];
+            var country = data['data']['country'];
+            $('#footer-city').text(city);
+            $('#footer-country').text(country);
+          }
+        }).done(function(data){
+          console.log(data);
         });
       };
     </script>

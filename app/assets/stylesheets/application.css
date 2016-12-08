@@ -26,7 +26,7 @@ body, html {
 }
 
 body{
-    font-family: "Josefin Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif !important;
     margin: 0;
     font-size: 14px;
     line-height: 1.42857143;

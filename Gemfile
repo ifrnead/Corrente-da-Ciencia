@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 # Gmaps4rails is developed to simply create a Google Map with overlays
 gem 'gmaps4rails'
 # Geocoder is a complete geocoding solution for Ruby
-#gem 'geocoder'
+gem 'geocoder'
 gem 'geokit-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.1'
