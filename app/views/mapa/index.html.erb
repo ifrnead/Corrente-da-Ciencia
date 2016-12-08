@@ -15,7 +15,7 @@
 <div class="container-map">
   <div id="map"></div>
   <div id="footer">
-    <span>IP: <%= @ip %> | Latitude: <span id="footer-lat"><%= @lat %></span> | Longitude: <span id="footer-lng"><%= @long %></span> | <span id="footer-city"><%= @city %> - <%= @uf %></span> - <span id="footer-country"><%= @country %></span> <i class="ion-ios-location-outline"></i></span>
+    <span>IP: <%= @ip %> | Latitude: <span id="footer-lat"></span> | Longitude: <span id="footer-lng"></span> | <span id="footer-city"></span> - <span id="footer-country"></span> <i class="ion-ios-location-outline"></i></span>
   </div>
 </div>
 
@@ -50,8 +50,9 @@
     <script type='text/javascript'>
       $(document).ready()
       {
-        $('#myModal').modal('show');
-        $('#myModal').on('hidden.bs.modal', function () {
+        var modal = $('#myModal');
+        modal.modal('show');
+        modal.on('hidden.bs.modal', function () {
           buildMap();
         });
       };
@@ -61,9 +62,11 @@
         handler.buildMap({ internal: {id: 'map'} }, function(){
           // be aware chrome >= 50 requires https for geolocation to work
           if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(displayOnMap);
+            navigator.geolocation.getCurrentPosition(displayOnMap, showError);
+          } else {
+            alert("Ops... A geolocalização não é suportada por este navegador.");
           }
-        }); // TODO Caso se recuse a compartilhar a geolocalização
+        });
       }
 
       function displayOnMap(position){
@@ -90,13 +93,39 @@
           success:function(data) {
             console.log(data);
             var city = data['data']['city'];
+            city += " - " + data['data']['uf']
             var country = data['data']['country'];
             $('#footer-city').text(city);
             $('#footer-country').text(country);
+          },
+          error: function(xhr){
+            var errors = $.parseJSON(xhr.responseText).errors;
+            alert(errors);
           }
         }).done(function(data){
           console.log(data);
         });
-      };
+      }
+
+      function showError(error) {
+        var msg;
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            // Caso se recuse a compartilhar a geolocalização
+            msg = "Infelizmente, não é possível participar desta pesquisa sem compartilhar sua geolocalização. Para tentar novamente, atualize a página."
+            //location.reload();
+            break;
+          case error.POSITION_UNAVAILABLE:
+            msg = "Ops... A localização está indisponivel no momento. Tente novamente mais tarde."
+            break;
+          case error.TIMEOUT:
+            msg = "Tempo limite de requisição da localização foi atingido. Tente novamente mais tarde."
+            break;
+          default: //UNKNOWN_ERROR:
+            msg = "Ocorreu um erro desconhecido."
+            break;
+        }
+        alert(msg);
+      }
     </script>
 <% end %>

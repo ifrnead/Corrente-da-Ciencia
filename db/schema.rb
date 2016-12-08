@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205233123) do
+ActiveRecord::Schema.define(version: 20161208141456) do
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "ip",         limit: 255
@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(version: 20161205233123) do
     t.float    "longitude",  limit: 24
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "cidade",     limit: 255
+    t.string   "uf",         limit: 255
+    t.string   "pais",       limit: 255
   end
 
 end
