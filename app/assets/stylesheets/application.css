@@ -36,67 +36,9 @@ body{
 /* Header */
 /*--------*/
 
-.header {
-    width: 100%;
-    height: 95px;
-    background: #323a44;
-    top: 0;
-    border-bottom: 3px solid #c0ec19;
-    position: fixed;
-    color: #FFF;
-    z-index: 1000;
-}
-
-.header .line1 {
-    height: 36px;
-    line-height: 36px;
-}
-
-.header .container {
-    position: relative;
-}
-
-.container {
-    width: 1170px;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.header .col1 {
-    position: absolute;
-    left: 0;
-    width: 50%;
-    padding-right: 180px;
-    display: block;
-    text-align: right;
-}
-
-.header .col2 {
-    position: absolute;
-    left: 50%;
-    width: 50%;
-    padding-left: 180px;
-    position: absolute;
-    display: block;
-}
-
-.header .logo {
-    position: absolute;
-    left: 50%;
-    top: 5px;
-    margin-left: -116px;
-    z-index: 100;
-}
-
-.header .logo img{
-    height: 82px;
+.navbar-left{
     float: left;
-    margin-right: 25px;
-}
-.header .logo h1{
-    margin: 0;
+    margin-right: 5px;
 }
 
 /*--------*/
@@ -112,18 +54,17 @@ body{
 #map {
     position: absolute;
     left: 0;
-    top: 95px;
+    top: -20px;
     right: 0;
-    bottom: 30px;
+    bottom: 34px;
 }
 
 /*--------*/
 /* Footer */
 /*--------*/
 
-#footer {
+.footer {
     background: #373f48;
-    height: 30px;
     line-height: 30px;
     border-top: 3px solid #c0ec19;
     position: fixed;
@@ -135,4 +76,140 @@ body{
     color: #FFF;
     text-align: center;
     padding-left: 10px;
+}
+
+.container-footer{
+    height: auto;
+}
+
+/*----------*/
+/* One Page */
+/*----------*/
+
+.box{
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding: 0;
+}
+
+.bg-light-gray{
+    background-color: #eee;
+}
+
+#services{
+    margin-bottom: -75px;
+}
+
+section {
+    padding: 100px 0;
+}
+section h2.section-heading {
+    font-size: 40px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+section h3.section-subheading {
+    font-size: 16px;
+    font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: none;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 75px;
+}
+@media (min-width: 768px) {
+    section {
+        padding: 150px 0;
+    }
+}
+
+.team-member {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.team-member img {
+    margin: 0 auto;
+    border: 7px solid white;
+}
+.team-member h4 {
+    margin-top: 25px;
+    margin-bottom: 0;
+    text-transform: none;
+}
+.team-member p {
+    margin-top: 0;
+}
+
+ul.social-buttons {
+    margin-bottom: 0;
+}
+ul.social-buttons li a {
+    display: block;
+    background-color: #222222;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    font-size: 20px;
+    line-height: 40px;
+    color: white;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+    background-color: #fed136;
+}
+
+section#contact {
+    background-color: #222222;
+    background-image: url('../images/map-image.png');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+section#contact .section-heading {
+    color: white;
+}
+section#contact .form-group {
+    margin-bottom: 25px;
+}
+section#contact .form-group input,
+section#contact .form-group textarea {
+    padding: 20px;
+}
+section#contact .form-group input.form-control {
+    height: auto;
+}
+section#contact .form-group textarea.form-control {
+    height: 236px;
+}
+section#contact .form-control:focus {
+    border-color: #fed136;
+    box-shadow: none;
+}
+section#contact ::-webkit-input-placeholder {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+section#contact :-moz-placeholder {
+    /* Firefox 18- */
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+section#contact ::-moz-placeholder {
+    /* Firefox 19+ */
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+section#contact :-ms-input-placeholder {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+section#contact .text-danger {
+    color: #e74c3c;
 }
