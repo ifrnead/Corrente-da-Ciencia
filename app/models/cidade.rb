@@ -1,10 +1,10 @@
 class Cidade < ActiveRecord::Base
   belongs_to :estado
 
-  def self.select2(params)
+  def self.getCities(params)
     cidades = Array.new
-    self.includes(:estado).where("cidades.nome LIKE '%#{params}%'").each do |cidade|
-      cidades << { id: cidade.id, nome: cidade.nome_sigla }
+    self.where("cidades.estado_id = '#{params[:estado_id]}' AND cidades.nome LIKE '%#{params[:q]}%'").each do |cidade|
+      cidades << { id: cidade.id, nome: cidade.nome }
     end
     return cidades
   end

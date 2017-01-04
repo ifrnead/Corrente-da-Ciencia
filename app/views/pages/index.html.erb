@@ -3,7 +3,8 @@
 </div>
 
 <% content_for :footer do %>
-    IP: <%= @ip %> | Latitude: <span id="footer-lat"></span> | Longitude: <span id="footer-lng"></span> | <span id="footer-city"></span> - <span id="footer-country"></span> <i class="ion-ios-location-outline"></i>
+    IP: <%= @ip %> | Latitude: <span id="footer-lat"></span> | Longitude: <span id="footer-lng"></span> |
+    <span id="footer-city"></span> - <span id="footer-country"></span> <i class="ion-ios-location-outline"></i>
 <% end %>
 
 <!-- Modal -->
@@ -39,14 +40,28 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Se não desejas compartilhar a sua localização...</h4>
+        <h4 class="modal-title">Se você não deseja compartilhar a sua localização exata...</h4>
       </div>
       <div class="modal-body">
         <p></p>
-        <p>Então, por favor, nos informe seu estado e sua cidade:</p>
+        <p>...então, por favor, nos informe seu estado e sua cidade:</p>
+        <p></p>
+        <%= bootstrap_form_for @user do |f| %>
+            <%= f.select :estado_id,
+                                 Estado.all.collect{ |e| [ "#{e.nome} - #{e.sigla}", e.id ] },
+                                 {prompt: "Selecione um estado...", selected: '', label: 'Estado *'},
+                                 {onChange: 'javascript: verificar_estado();'} %>
+            <br>
+            <%= f.select :cidade_id,
+                                 {},
+                                 {prompt: "Selecione uma cidade...", selected: '', label: 'Cidade *'},
+                                 {disable: true, onChange: 'javascript: verificar_cidade();'} %>
+        <% end %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Continuar</button>
+        <button id="modal-error-go" type="button" class="btn btn-primary" data-dismiss="modal" disabled>Continuar</button>
+        <button id="modal-error-not" type="button" class="btn btn-danger" data-dismiss="modal">Não informar
+        </button>
       </div>
     </div>
 
@@ -62,27 +77,45 @@
             modal.on('hidden.bs.modal', function () {
                 buildMap();
             });
-        };
+        }
+        ;
 
         function initModal(modal) {
             modal.modal({backdrop: 'static', keyboard: false}).modal('show');
         }
 
+        var latlng, geoOptions = {
+            timeout: 7000 // Wait 5 seconds
+        };
         var handler = Gmaps.build('Google');
-        function buildMap(){
-            handler.buildMap({ internal: {id: 'map'} }, function(){
+        function buildMap() {
+            handler.buildMap({internal: {id: 'map'}}, function () {
                 // be aware chrome >= 50 requires https for geolocation to work
-                if(navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(displayOnMap, showError);
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(displayOnMap, showError, geoOptions);
+
+                    if ( navigator.userAgent.indexOf("Firefox") != -1 ) {
+                        // function fail never called if user declines to share geolocation in firefox
+                        setTimeout(function () {
+                            if (!latlng) {
+                                window.console.log("No confirmation from user, using fallback");
+                                showError();
+                            } else {
+                                window.console.log("Location was set");
+                            }
+                        }, geoOptions.timeout + 1000);
+                    }
                 } else {
                     alert("Ops... A geolocalização não é suportada por este navegador.");
                 }
             });
         }
 
-        function displayOnMap(position){
+        function displayOnMap(position) {
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
+
+            latlng = {lat: lat, lng: lng};
 
             $('#footer-lat').text(lat);
             $('#footer-lng').text(lng);
@@ -101,49 +134,135 @@
                 data: { lat: lat, lng: lng },
                 contentType: 'application/json',
                 dataType: 'json',
-                success:function(data) {
+                success: function (data) {
                     console.log(data);
-                    var city = data['data']['city'];
-                    city += " - " + data['data']['uf']
-                    var country = data['data']['country'];
+                    data = data['data'];
+                    var city = data['city'];
+                    city += " - " + data['uf']
+                    var country = data['country'];
                     $('#footer-city').text(city);
                     $('#footer-country').text(country);
+
+                    thanks();
+                    redirectToResults(true);
                 },
-                error: function(xhr){
-                    var errors = $.parseJSON(xhr.responseText).errors;
-                    alert(errors);
-                }
-            }).done(function(data){
-                console.log(data);
-            });
+                error: alertErrors
+            }).done(alertDone);
         }
 
         function showError(error) {
-            /*var msg;
-            switch(error.code) {
-            case error.PERMISSION_DENIED:
-            // Caso se recuse a compartilhar a geolocalização
-            msg = "Infelizmente, não é possível participar desta pesquisa sem compartilhar sua geolocalização. Para tentar novamente, atualize a página."
-            //location.reload();
-            break;
-            case error.POSITION_UNAVAILABLE:
-            msg = "Ops... A localização está indisponivel no momento. Tente novamente mais tarde."
-            break;
-            case error.TIMEOUT:
-            msg = "Tempo limite de requisição da localização foi atingido. Tente novamente mais tarde."
-            break;
-            default: //UNKNOWN_ERROR:
-            msg = "Ocorreu um erro desconhecido."
-            break;
-            }
-            alert(msg);*/
-
             var modal = $('#myModalError');
             initModal(modal);
+
+            $('#modal-error-go').click(function (evt) {
+                estado_id = $("#usuario_estado_id").val();
+                cidade_id = $("#usuario_cidade_id").val();
+                //console.log(cidade_id);
+                $.ajax({
+                    type: 'POST',
+                    url: '/cidade',
+                    data: JSON.stringify({usuario: {city: cidade_id, uf: estado_id}}),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+                        //console.log(data);
+                        if (data) {
+                            redirectToResults(false);
+                        }
+                    },
+                    error: alertErrors
+                }).done(alertDone);
+            });
+
             modal.on('hidden.bs.modal', function () {
                 // Change to results
-                window.location.href = '/resultados';
+                redirectToResults(false)
             });
+        }
+
+        function verificar_estado() {
+            //alert("Verifica estado!");
+            estado = $("#usuario_estado_id");
+            estado_id = estado.val();
+            if(estado_id != -1) {
+                // Se o estado for selecionado.
+                estado.attr('disabled', 'disabled');
+                getCities(estado_id);
+                $('#modal-error-not').prop('disabled', true);
+                //cidade_id = $("#usuario_cidade_id");
+            } else {
+                estado.attr('disabled', false);
+            }
+        }
+
+        function verificar_cidade() {
+            //alert("Verifica cidade!");
+            cidade_id = $("#usuario_cidade_id");
+            if(cidade_id.val() != -1) {
+                // Se a cidade for selecionado.
+                cidade_id.attr('disabled', 'disabled');
+                $('#modal-error-go').prop('disabled', false);
+            } else {
+                cidade_id.attr('disabled', false);
+            }
+        }
+
+        function getCities(estado_id) {
+            cidades = $("#usuario_cidade_id");
+            cidades.select2({
+                theme: 'bootstrap',
+                language: "pt-BR",
+                ajax: {
+                    url: "<%= cidades_path %>",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            estado_id: estado_id,
+                            page: params.page
+                        }
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.nome,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 3
+            });
+
+            cidades.next().addClass('form-control');
+        }
+
+        function thanks() {
+            alert("Obrigado pela participação!");
+        }
+
+        function redirectToResults(wait) {
+            url = '<%= results_path %>';
+            if (wait){
+              var delay = 5000; //Your delay in milliseconds
+              setTimeout(function(){ window.location.href = url; }, delay);
+            } else{
+                window.location.href = url;
+            }
+        }
+
+        function alertErrors(xhr) {
+            var errors = xhr.responseText; //$.parseJSON(xhr.responseText).errors;
+            alert(errors);
+        }
+
+        function alertDone(data) {
+            console.log(data);
         }
     </script>
 <% end %>
