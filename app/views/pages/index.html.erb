@@ -2,36 +2,16 @@
   <div id="map"></div>
 </div>
 
-<% content_for :footer do %>
-    IP: <%= @ip %> | Latitude: <span id="footer-lat"></span> | Longitude: <span id="footer-lng"></span> |
-    <span id="footer-city"></span> - <span id="footer-country"></span> <i class="ion-ios-location-outline"></i>
-<% end %>
+<!--
+Caro visitante, este projeto de pesquisa, denominado *Corrente da Ciência*,
+visa o monitoramento e análise de dados da propagação de "correntes" em redes sociais,
+com ênfase inicial no What'sApp. Para isso, é muito importante que você permita a coleta
+da geolocalização (caixa de diálogo que aparecerá a seguir).
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
+Assim, será possível gerar um mapa que ilustre a disseminação dessa mensagem.</p>
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Caro visitante,</h4>
-      </div>
-      <div class="modal-body">
-        <p></p>
-        <p>Este projeto de pesquisa, denominado <b>Corrente da Ciência</b>,
-          visa o monitoramento e análise de dados da propagação de "correntes" em redes sociais,
-          com ênfase inicial no What'sApp. Para isso, é muito importante que você permita a coleta
-          da geolocalização (caixa de diálogo que aparecerá a seguir).</p>
-        <p>Assim, será possível gerar um mapa que ilustre a disseminação dessa mensagem.</p>
-        <p>Certos de vossa compreensão, agradecemos a participação nesta pesquisa!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Continuar</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+Certos de vossa compreensão, agradecemos a participação nesta pesquisa!
+-->
 
 <!-- Modal -->
 <div class="modal fade in" id="myModalError" role="dialog">
@@ -70,15 +50,11 @@
 
 <% content_for :javascript do %>
     <script type='text/javascript'>
+        var handler = Gmaps.build('Google');
         $(document).ready()
         {
-            var modal = $('#myModal');
-            initModal(modal);
-            modal.on('hidden.bs.modal', function () {
-                buildMap();
-            });
-        }
-        ;
+            buildMap();
+        };
 
         function initModal(modal) {
             modal.modal({backdrop: 'static', keyboard: false}).modal('show');
@@ -87,7 +63,7 @@
         var latlng, geoOptions = {
             timeout: 7000 // Wait 5 seconds
         };
-        var handler = Gmaps.build('Google');
+
         function buildMap() {
             handler.buildMap({internal: {id: 'map'}}, function () {
                 // be aware chrome >= 50 requires https for geolocation to work
@@ -143,7 +119,6 @@
                     $('#footer-city').text(city);
                     $('#footer-country').text(country);
 
-                    thanks();
                     redirectToResults(true);
                 },
                 error: alertErrors
@@ -240,10 +215,6 @@
             });
 
             cidades.next().addClass('form-control');
-        }
-
-        function thanks() {
-            alert("Obrigado pela participação!");
         }
 
         function redirectToResults(wait) {

@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
   def index
     @page_active = __method__
-    @ip = request.remote_ip
     #location = Geokit::Geocoders::IpGeocoder.geocode(@ip)
     #if location.success
 
