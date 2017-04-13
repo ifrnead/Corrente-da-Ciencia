@@ -37,6 +37,10 @@ body#what {
     background-color: #fff;
 }
 
+.logo-ifrn-ead{
+    width: 30%;
+}
+
 body#who{
     background-color: #eee;
 }
@@ -123,7 +127,7 @@ section h3.section-subheading {
     text-transform: none;
     font-style: italic;
     font-weight: 400;
-    margin-bottom: 75px;
+    margin-bottom: 40px;
 }
 @media (min-width: 768px) {
     section#what, section#contact {
@@ -142,6 +146,8 @@ section#team {
 .team-member img {
     margin: 0 auto;
     border: 7px solid white;
+    width: 210px;
+    height: 235px;
 }
 .team-member h4 {
     margin-top: 25px;
