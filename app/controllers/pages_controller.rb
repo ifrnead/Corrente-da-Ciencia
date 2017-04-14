@@ -27,14 +27,4 @@ class PagesController < ApplicationController
       end
     end
   end
-
-  def contact
-    @page_active = __method__
-
-    # TODO Send email
-    # name = params['name']
-    # email = params['email']
-    # phone = params['phone']
-    # message = params['message']
-  end
 end

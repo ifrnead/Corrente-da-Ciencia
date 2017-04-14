@@ -133,6 +133,9 @@ section h3.section-subheading {
     section#what, section#contact {
         padding: 150px 0;
     }
+    section#contact{
+        padding-bottom: 82px;
+    }
 }
 
 section#team {

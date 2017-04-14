@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   get '/o-que-e' => 'pages#what'
   get 'quem-somos' => 'pages#who'
   get '/resultados' => 'pages#results', as: 'results'
-  get '/contato' => 'pages#contact'
+  get 'contato', to: 'messages#new', as: 'contact'
+  post 'contato', to: 'messages#create'
 
   get '/location' => 'usuario#create_by_location'
   get '/cidades' => 'usuario#get_cities', as: 'cidades'
