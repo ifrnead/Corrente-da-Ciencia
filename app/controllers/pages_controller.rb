@@ -18,13 +18,5 @@ class PagesController < ApplicationController
   def results
     @page_active = __method__
     @users = Usuario.all
-    @hash = Gmaps4rails.build_markers(@users) do |user, marker|
-      lat = user.latitude
-      lng = user.longitude
-      if lat && lng
-        marker.lat lat
-        marker.lng lng
-      end
-    end
   end
 end

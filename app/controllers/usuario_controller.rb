@@ -37,30 +37,22 @@ class UsuarioController < ApplicationController
 
   def create_by_city
     ip = request.remote_ip
-    permited = usuario_params
-    puts permited
-    city_id = permited[:city]
-    uf_id = permited[:uf]
 
-    city = Cidade.find(city_id).nome
-    uf = Estado.find(uf_id).sigla
+    city = Cidade.find(params[:city]).nome
+    uf = Estado.find(params[:uf]).sigla
 
     coordinates = Geocoder.coordinates("#{city}, #{uf}")
-    #puts coordinates
+
     lat = coordinates[0]
     lng = coordinates[1]
 
     location = get_location lat, lng
-    country = get_country location#location[4]
+    country = get_country location
 
     @usuario = Usuario.new(ip: ip, latitude: lat, longitude: lng, cidade: city, uf: uf, pais: country)
+
     if @usuario.save
-      render json: true
-      # respond_to do |format|
-      #   format.json {
-      #     head :no_content
-      #   }
-      # end
+      render json: { lat: lat, lng: lng }
     end
   end
 
@@ -81,7 +73,4 @@ class UsuarioController < ApplicationController
     location[4]
   end
 
-  def usuario_params
-    params.require(:usuario).permit(:city, :uf)
-  end
 end

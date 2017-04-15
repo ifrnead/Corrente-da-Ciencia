@@ -1,4 +1,6 @@
 class Cidade < ActiveRecord::Base
+  include Selectable
+
   belongs_to :estado
 
   def self.getCities(params)
