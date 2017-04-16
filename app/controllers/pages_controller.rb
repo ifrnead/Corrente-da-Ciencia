@@ -1,10 +1,11 @@
 class PagesController < ApplicationController
+  require 'locator'
+
   def index
     @page_active = __method__
-    #location = Geokit::Geocoders::IpGeocoder.geocode(@ip)
-    #if location.success
+    location = Locator.locate(request.remote_ip)
 
-    @user = Usuario.new
+    @visita = Visita.create(ip: request.remote_ip, latitude: location.lat, longitude: location.lng, cidade: location.city, uf: location.state, pais: location.country_code, fonte: Visita::FONTES[:ip])
   end
 
   def what
@@ -17,6 +18,6 @@ class PagesController < ApplicationController
 
   def results
     @page_active = __method__
-    @users = Usuario.all
+    @visitas = Visita.all
   end
 end

@@ -34,9 +34,8 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="<% if @page_active == :index %><%= 'active' %><% end %>"><%= link_to 'Mapa', controller: 'pages', action: :index %></li>
-        <li class="<% if @page_active == :what %><%= 'active' %><% end %>"><%= link_to 'O que é', {controller: 'pages', action: :what}, class: 'page-scroll' %></li>
-        <li class="<% if @page_active == :who %><%= 'active' %><% end %>"><%= link_to 'Quem somos', {controller: 'pages', action: :who}, class: 'page-scroll' %></li>
-        <li class="<% if @page_active == :results %><%= 'active' %><% end %>"><%= link_to 'Resultados Parciais', controller: 'pages', action: :results %></li>
+        <li class="<% if @page_active == :what %><%= 'active' %><% end %>"><%= link_to 'O que é?', {controller: 'pages', action: :what}, class: 'page-scroll' %></li>
+        <li class="<% if @page_active == :who %><%= 'active' %><% end %>"><%= link_to 'Quem somos?', {controller: 'pages', action: :who}, class: 'page-scroll' %></li>
         <li class="<% if @page_active == :new %><%= 'active' %><% end %>"><%= link_to 'Contato', {controller: 'messages', action: :new}, class: 'page-scroll' %></li>
       </ul>
     </div>

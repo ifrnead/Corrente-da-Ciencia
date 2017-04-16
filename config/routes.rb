@@ -8,16 +8,14 @@ Rails.application.routes.draw do
   root 'pages#index'
   get 'o-que-e' => 'pages#what'
   get 'quem-somos' => 'pages#who'
-  get 'resultados' => 'pages#results', as: 'results'
+  # get 'resultados' => 'pages#results', as: 'results'
   get 'contato', to: 'messages#new', as: 'contact'
   post 'contato', to: 'messages#create'
 
-  post 'create_by_location' => 'usuario#create_by_location'
-  post 'create_by_city' => 'usuario#create_by_city'
+  patch 'create_by_location' => 'visitas#create_by_location'
+  patch 'create_by_city' => 'visitas#create_by_city'
 
-  get 'cidades' => 'usuario#get_cities', as: 'cidades'
-
-  resource :usuarios
+  get 'cidades' => 'visitas#get_cities', as: 'cidades'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

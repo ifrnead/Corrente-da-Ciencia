@@ -16,9 +16,9 @@
         <p></p>
         <p>Para participar, por favor, nos informe seu estado e sua cidade:</p>
         <p></p>
-        <%= bootstrap_form_for @user do |f| %>
+        <%= bootstrap_form_for(@visita, url: create_by_city_path, method: :patch) do |f| %>
             <%= f.select :estado_id,
-                                 Estado.select('nome_sigla'),
+                                 Estado.select,
                                  {prompt: "Selecione", selected: '', label: 'Estado *'},
                                  {onChange: 'javascript: verificar_estado();'} %>
             <br>
@@ -40,6 +40,7 @@
     <script type='text/javascript'>
 
         var map = null;
+        var visita_id = <%= @visita.id %>;
 
         function initModal() {
           $('#modal_form').modal('show');
@@ -84,9 +85,9 @@
 
         function send_location(lat, lng) {
             $.ajax({
-                type: 'POST',
+                type: 'PATCH',
                 url: '/create_by_location',
-                data: { lat: lat, lng: lng },
+                data: { lat: lat, lng: lng, id: visita_id },
                 success: function (data) {
                   console.log(data);
                 }
@@ -94,13 +95,13 @@
         }
 
         function send_city() {
-          cidade_id = $("#usuario_cidade_id").val();
-          estado_id = $("#usuario_estado_id").val();
+          cidade_id = $("#visita_cidade_id").val();
+          estado_id = $("#visita_estado_id").val();
 
           $.ajax({
-              type: 'POST',
+              type: 'PATCH',
               url: '/create_by_city',
-              data: { city: cidade_id, uf: estado_id },
+              data: { city: cidade_id, uf: estado_id, id: visita_id },
               success: function (position) {
                 show_confirmation(position.lat, position.lng);
               }
@@ -108,14 +109,12 @@
         }
 
         function verificar_estado() {
-          estado_id = $("#usuario_estado_id").val();
-          if(estado_id != -1) {
-            getCities(estado_id);
-          }
+          estado = $("#visita_estado_id").val();
+          getCities(estado);
         }
 
-        function getCities(estado_id) {
-            cidades = $("#usuario_cidade_id");
+        function getCities(estado) {
+            cidades = $("#visita_cidade_id");
             cidades.select2({
                 theme: 'bootstrap',
                 language: "pt-BR",
@@ -126,7 +125,7 @@
                     data: function(params) {
                         return {
                             q: params.term,
-                            estado_id: estado_id,
+                            estado: estado,
                             page: params.page
                         }
                     },
