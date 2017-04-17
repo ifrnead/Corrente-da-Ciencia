@@ -14,42 +14,25 @@
  *= require_self
  *= require rails_bootstrap_forms
  *= require select2
+ *= require select2-bootstrap
  */
 
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
 body, html {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
-body{
-    margin: 0;
-    line-height: 1.42857143;
-}
-body#what {
-    background-color: #fff;
-}
-
-.logo-ifrn-ead{
-    width: 30%;
-}
-
-body#who{
-    background-color: #eee;
+.logo-ifrn-ead {
+  width: 30%;
 }
 
 /*--------*/
 /* Header */
 /*--------*/
 
-.navbar-left{
-    float: left;
-    margin-right: 5px;
+#logo_ifrn {
+  max-width:100%;
+  max-height:100%;
 }
 
 /*--------*/
@@ -57,64 +40,41 @@ body#who{
 /*--------*/
 
 .container-map{
-    width: 100%;
-    height: 100%;
-    position: relative;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 #map {
-    position: absolute;
-    left: 0;
-    top: -20px;
-    right: 0;
-    bottom: 0px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  right: 0;
+  bottom: 0px;
 }
 
 /*----------*/
 /* One Page */
 /*----------*/
 
-.box{
-    margin-top: 50px;
-    margin-bottom: 30px;
-    padding: 0;
+h1 {
+  padding-bottom: 1em;
 }
 
-.bg-light-gray{
-    background-color: #eee;
+section {
+  padding-top: 6em;
 }
 
-#services{
-    margin-bottom: -75px;
+section#contact {
+  background-color: #222222;
+  background-image: url('../images/map-image.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
 }
 
-section#what, section#contact {
-    padding: 100px 0;
-}
-section h2.section-heading {
-    font-size: 40px;
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-section h3.section-subheading {
-    font-size: 16px;
-    font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-transform: none;
-    font-style: italic;
-    font-weight: 400;
-    margin-bottom: 40px;
-}
-@media (min-width: 768px) {
-    section#what, section#contact {
-        padding: 150px 0;
-    }
-    section#contact{
-        padding-bottom: 82px;
-    }
-}
-
-section#team {
-    padding-top: 100px;
+section#contact h1 {
+  color: white;
 }
 
 .team-member {
@@ -157,54 +117,4 @@ ul.social-buttons li a:hover,
 ul.social-buttons li a:focus,
 ul.social-buttons li a:active {
     background-color: #fed136;
-}
-
-section#contact {
-    background-color: #222222;
-    background-image: url('../images/map-image.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100%;
-}
-section#contact .section-heading {
-    color: white;
-}
-section#contact .form-group {
-    margin-bottom: 25px;
-}
-section#contact .form-group input,
-section#contact .form-group textarea {
-    padding: 20px;
-}
-section#contact .form-group input.form-control {
-    height: auto;
-}
-section#contact .form-control:focus {
-    border-color: #fed136;
-    box-shadow: none;
-}
-section#contact ::-webkit-input-placeholder {
-    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-section#contact :-moz-placeholder {
-    /* Firefox 18- */
-    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-section#contact ::-moz-placeholder {
-    /* Firefox 19+ */
-    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-section#contact :-ms-input-placeholder {
-    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-section#contact .text-danger {
-    color: #e74c3c;
 }

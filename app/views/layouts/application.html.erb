@@ -14,38 +14,35 @@
   <!-- Social Icons of Who page -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
-<body <% if @page_active == :what %><%= 'id="what"' %><% elsif @page_active == :who %><%= 'id=who' %><% end %>>
+<body>
 
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">
-        <img src="images/logo.png" class="navbar-left" width="15px" alt="IFRN">
-        Corrente da Ciência
-      </a>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <%= image_tag 'logo.png', id: 'logo_ifrn', class: 'pull-left' %>&nbsp; Corrente da Ciência
+        </a>
+      </div>
+
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="<%= 'active' if @page_active == :index %>"><%= link_to 'Mapa', root_path %></li>
+          <li class="<%= 'active' if @page_active == :what %>"><%= link_to 'O que é?', o_que_e_path %></li>
+          <li class="<%= 'active' if @page_active == :who %>"><%= link_to 'Quem somos?', quem_somos_path %></li>
+          <li class="<%= 'active' if @page_active == :new %>"><%= link_to 'Contato', contact_path %></li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="<% if @page_active == :index %><%= 'active' %><% end %>"><%= link_to 'Mapa', controller: 'pages', action: :index %></li>
-        <li class="<% if @page_active == :what %><%= 'active' %><% end %>"><%= link_to 'O que é?', {controller: 'pages', action: :what}, class: 'page-scroll' %></li>
-        <li class="<% if @page_active == :who %><%= 'active' %><% end %>"><%= link_to 'Quem somos?', {controller: 'pages', action: :who}, class: 'page-scroll' %></li>
-        <li class="<% if @page_active == :new %><%= 'active' %><% end %>"><%= link_to 'Contato', {controller: 'messages', action: :new}, class: 'page-scroll' %></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+  <%= yield %>
 
-<%= yield %>
-
-  <!-- jQuery -->
-  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
   <!-- Bootstrap -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- jasny-bootstrap - Mask Input -->

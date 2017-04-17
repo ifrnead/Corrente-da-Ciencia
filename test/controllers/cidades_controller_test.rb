@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CidadeTest < ActiveSupport::TestCase
+class CidadesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end

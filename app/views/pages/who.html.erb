@@ -1,16 +1,14 @@
-<!-- Team Section -->
-<section id="team" class="bg-light-gray">
+<section>
   <div class="container">
     <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading">Conheça nossa equipe</h2>
-        <h3 class="section-subheading text-muted"></h3>
+      <div class="col-lg-12">
+        <h1 class="text-center">Conheça nossa equipe</h1>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4">
         <div class="team-member">
-          <img src="images/team/4.jpg" class="img-responsive img-circle" alt="">
+          <%= image_tag 'jose-dijon.jpg', class: 'img-responsive img-circle' %>
           <h4>Dijon Neto</h4>
           <p class="text-muted">Orientando</p>
           <ul class="list-inline social-buttons">
@@ -21,9 +19,9 @@
       </div>
       <div class="col-sm-4">
         <div class="team-member">
-          <img src="images/team/5.jpg" class="img-responsive img-circle" alt="">
-          <h4>Jalerson Lima</h4>
-          <p class="text-muted">Orientador</p>
+          <%= image_tag 'jalerson-lima.jpg', class: 'img-responsive img-circle' %>
+          <h4>Prof. Jalerson Lima</h4>
+          <p class="text-muted">Professor Orientador</p>
           <ul class="list-inline social-buttons">
             <li><a href="https://github.com/jalerson"><i class="fa fa-github"></i></a></li>
             <li><a href="https://www.facebook.com/jalerson"><i class="fa fa-facebook"></i></a></li>
@@ -32,8 +30,8 @@
       </div>
       <div class="col-sm-4">
         <div class="team-member">
-          <img src="http://docente.ifrn.edu.br/erickbergamini/image_preview" class="img-responsive img-circle" alt="">
-          <h4>Erick Bergamini</h4>
+          <%= image_tag 'erick-bergamini.jpg', class: 'img-responsive img-circle' %>
+          <h4>Prof. Erick Bergamini</h4>
           <p class="text-muted">Professor Colaborador</p>
           <ul class="list-inline social-buttons">
             <li><a href="https://github.com/erick-bergamini"><i class="fa fa-github"></i></a></li>

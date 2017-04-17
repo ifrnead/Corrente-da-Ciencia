@@ -5,6 +5,7 @@ gem 'bootstrap_form'
 gem 'select2-rails'
 # Geocoder is a complete geocoding solution for Ruby
 gem 'geocoder'
+gem 'rest-client'
 gem 'geokit-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.1'

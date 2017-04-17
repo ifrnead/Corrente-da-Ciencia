@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   patch 'create_by_location' => 'visitas#create_by_location'
   patch 'create_by_city' => 'visitas#create_by_city'
 
-  get 'cidades' => 'visitas#get_cities', as: 'cidades'
+  get 'cidades/buscar' => 'cidades#buscar'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -7,7 +7,7 @@ class CreateVisitas < ActiveRecord::Migration
       t.string :cidade
       t.string :uf
       t.string :pais
-      t.integer :fonte
+      t.string :fonte
 
       t.timestamps null: false
     end

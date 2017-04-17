@@ -1,9 +1,8 @@
 class PagesController < ApplicationController
-  require 'locator'
 
   def index
     @page_active = __method__
-    location = Locator.locate(request.remote_ip)
+    location = Geokit::Geocoders::GoogleGeocoder.geocode(request.remote_ip)
 
     @visita = Visita.create(ip: request.remote_ip, latitude: location.lat, longitude: location.lng, cidade: location.city, uf: location.state, pais: location.country_code, fonte: Visita::FONTES[:ip])
   end

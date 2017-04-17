@@ -13,20 +13,10 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p></p>
         <p>Para participar, por favor, nos informe seu estado e sua cidade:</p>
-        <p></p>
-        <%= bootstrap_form_for(@visita, url: create_by_city_path, method: :patch) do |f| %>
-            <%= f.select :estado_id,
-                                 Estado.select,
-                                 {prompt: "Selecione", selected: '', label: 'Estado *'},
-                                 {onChange: 'javascript: verificar_estado();'} %>
-            <br>
-            <%= f.select :cidade_id,
-                                 {},
-                                 {prompt: "Selecione", selected: '', label: 'Cidade *'},
-                                 { disable: true } %>
-        <% end %>
+        <form>
+          <select class="form-control" name="cidade" id="cidade" style="width:100%"></select>
+        </form>
       </div>
       <div class="modal-footer">
         <button id="modal-error-go" type="button" class="btn btn-primary" data-dismiss="modal" onclick="send_city()">Enviar</button>
@@ -37,116 +27,101 @@
 </div>
 
 <%= content_for :javascript do %>
-    <script type='text/javascript'>
+  <script type='text/javascript'>
+    $(function() {
+      $("#cidade").select2({
+        theme: 'bootstrap',
+        language: "pt-BR",
+        placeholder: 'Selecione',
+        ajax: {
+          url: "<%= cidades_buscar_path %>",
+          dataType: 'json',
+          delay: 250,
+          data: function(params) {
+            return {
+              cidade: params.term,
+            }
+          },
+          processResults: function (data) {
+            return {
+              results: data
+            };
+          },
+          cache: true
+        },
+        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        minimumInputLength: 3
+      });
+    });
 
-        var map = null;
-        var visita_id = <%= @visita.id %>;
+    var map = null;
+    var visita_id = <%= @visita.id %>;
 
-        function initModal() {
-          $('#modal_form').modal('show');
-        }
+    function initModal() {
+      $('#modal_form').modal('show');
+    }
 
-        function buildMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: { lat: -15.7942, lng: -47.8825 } // Brasília
-          });
+    function buildMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: { lat: -15.7942, lng: -47.8825 } // Brasília
+      });
 
-          options = {
-            maximumAge: 600000 // 10 minutos
+      options = {
+        maximumAge: 600000 // 10 minutos
+      };
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var location = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
           };
 
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var location = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
-              show_confirmation(location.lat, location.lng);
-              send_location(location.lat, location.lng);
-            }, function(err) {
-              initModal();
-            }, options);
-          } else {
-            // Browser doesn't support Geolocation
-            initModal();
+          send_location(location.lat, location.lng);
+        }, function(err) {
+          initModal();
+        }, options);
+      } else {
+        // Browser doesn't support Geolocation
+        initModal();
+      }
+    }
+
+    function show_confirmation(lat, lng) {
+      var location = { lat: lat, lng: lng };
+
+      infoWindow = new google.maps.InfoWindow;
+      infoWindow.setPosition(location);
+      infoWindow.setContent('Obrigado pela participação!');
+      infoWindow.open(map);
+      map.setCenter(location);
+    }
+
+    function send_location(lat, lng) {
+        $.ajax({
+            type: 'PATCH',
+            url: '/create_by_location',
+            data: { lat: lat, lng: lng, id: visita_id },
+            success: function (data) {
+              show_confirmation(lat, lng);
+            }
+        });
+    }
+
+    function send_city() {
+      cidade = $("#cidade").val();
+
+      $.ajax({
+          type: 'PATCH',
+          url: '/create_by_city',
+          data: { cidade: cidade, id: visita_id },
+          success: function (position) {
+            show_confirmation(position.lat, position.lng);
           }
-        }
+      });
+    }
 
-        function show_confirmation(lat, lng) {
-          var location = { lat: lat, lng: lng };
-
-          infoWindow = new google.maps.InfoWindow;
-          infoWindow.setPosition(location);
-          infoWindow.setContent('Obrigado pela participação!');
-          infoWindow.open(map);
-          map.setCenter(location);
-        }
-
-        function send_location(lat, lng) {
-            $.ajax({
-                type: 'PATCH',
-                url: '/create_by_location',
-                data: { lat: lat, lng: lng, id: visita_id },
-                success: function (data) {
-                  console.log(data);
-                }
-            });
-        }
-
-        function send_city() {
-          cidade_id = $("#visita_cidade_id").val();
-          estado_id = $("#visita_estado_id").val();
-
-          $.ajax({
-              type: 'PATCH',
-              url: '/create_by_city',
-              data: { city: cidade_id, uf: estado_id, id: visita_id },
-              success: function (position) {
-                show_confirmation(position.lat, position.lng);
-              }
-          });
-        }
-
-        function verificar_estado() {
-          estado = $("#visita_estado_id").val();
-          getCities(estado);
-        }
-
-        function getCities(estado) {
-            cidades = $("#visita_cidade_id");
-            cidades.select2({
-                theme: 'bootstrap',
-                language: "pt-BR",
-                ajax: {
-                    url: "<%= cidades_path %>",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term,
-                            estado: estado,
-                            page: params.page
-                        }
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.nome,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-                minimumInputLength: 3
-            });
-
-            cidades.next().addClass('form-control');
-        }
-    </script>
+  </script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrbu5vz973WwL_JhQBRtGx3O2-lkYabSg&callback=buildMap"></script>
 <% end %>

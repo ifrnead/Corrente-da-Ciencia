@@ -1,9 +1,9 @@
 class Visita < ActiveRecord::Base
 
   FONTES = {
-    :ip => 1,
-    :cidade => 2,
-    :gps => 3
+    :ip => 'ip',
+    :cidade => 'cidade',
+    :gps => 'gps'
   }
 
 end
