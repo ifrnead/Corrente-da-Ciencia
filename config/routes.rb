@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'pages#index'
-  get 'o-que-e' => 'pages#what'
-  get 'quem-somos' => 'pages#who'
+  root 'pages#index', as: 'home'
+  get 'o-que-e' => 'pages#what', as: 'what'
+  get 'quem-somos' => 'pages#who', as: 'who'
   # get 'resultados' => 'pages#results', as: 'results'
   get 'contato', to: 'messages#new', as: 'contact'
   post 'contato', to: 'messages#create'

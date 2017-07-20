@@ -8,26 +8,26 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- Icons -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 <body>
-  <div class="painel">
-    <h1>Corrente da Ciência</h1>
-    <h3>participe enviando sua localização</h3>
-    <button type="button" name="button" class="botao" onclick="window.location='onde.html'">Participar</button>
-  </div>
+
+  <%= yield %>
+
   <div class="rodape">
     <div class="icones-conteudo">
-      <button type="button" class="icons" onclick="window.open('index.html')"><i class="fa fa-home" ></i><br>Home</button>
-      <button type="button" class="icons"><i class="fa fa-file-text"></i><br>Sobre</button>
-      <button type="button" class="icons"><i class="fa fa-users"></i><br>Equipe</button>
-      <button type="button" class="icons"><i class="fa fa-envelope"></i><br>Contato</button>
+      <button type="button" class="icons" onclick="location.href='<%= home_path %>'"><i class="fa fa-home" ></i><br>Home</button>
+      <button type="button" class="icons" onclick="location.href='<%= what_path %>'"><i class="fa fa-file-text"></i><br>Sobre</button>
+      <button type="button" class="icons" onclick="location.href='<%= who_path %>'"><i class="fa fa-users"></i><br>Equipe</button>
+      <button type="button" class="icons" onclick="location.href='<%= contact_path %>'"><i class="fa fa-envelope"></i><br>Contato</button>
     </div>
   </div>
 
-  <%= yield %>
-  
+  <!-- Bootstrap -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- jasny-bootstrap - Mask Input -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
   <%= yield :javascript %>

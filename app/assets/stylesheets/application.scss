@@ -52,7 +52,7 @@ h3 {
   padding-left: 20px;
   padding-right: 20px;
   box-shadow: 0px 4px 3px rgba(0,0,0,0.5);
-  margin-left: 35%;
+  //margin-left: 35%;
 }
 .botao:hover{
   box-shadow: 0px 5px 3px rgba(0,0,0,0.5);
@@ -78,17 +78,16 @@ h3 {
   box-shadow: 0px 3px 5px rgba(0,0,0,0.3) inset;
   color: #555;
   text-align: center;
-
 }
 
 .painel {
   position: absolute;
-  width: 560px;
-  height: 250px;
+  width: 632px;
+  /* height: 250px; */
   padding: 40px;
-  top: 50%;
-  left: 50%;
-  margin: -200px 0 0 -320px;
+  top: 25%;
+  left: 25%;
+  /* margin: -200px 0 0 -320px; */
   background-color: rgba(215, 225, 225, 0.7);
   border-style: solid;
   border-width: 1px;
@@ -129,4 +128,58 @@ h3 {
   width: 454px;
   height: 100px;
   margin: auto;
+}
+
+/* Dijon */
+
+.text-justify {
+  text-align: justify;
+}
+
+.team-member {
+  text-align: center;
+  margin-bottom: 50px;
+  float: left;
+  padding: 0px 10px 0px 10px;
+}
+.team-member img {
+  margin: 0 auto;
+  border: 7px solid white;
+  width: 160px;
+  height: 175px;
+}
+.team-member h4 {
+  margin-top: 25px;
+  margin-bottom: 0;
+  text-transform: none;
+}
+.team-member p {
+  margin-top: 0;
+}
+
+ul.social-buttons {
+  margin-bottom: 0;
+}
+ul.social-buttons li a {
+  float: left;
+  display: block;
+  background-color: #222222;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  font-size: 20px;
+  line-height: 40px;
+  color: white;
+  outline: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+  background-color: #fed136;
+}
+.text-danger {
+  color: #e74c3c;
 }
