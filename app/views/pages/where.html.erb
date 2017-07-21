@@ -1,0 +1,72 @@
+<div class="wrapper">
+  <div class="painel" style="padding-bottom: 80px;">
+    <p>
+      <h1>Corrente da Ciência</h1>
+      <h3>Não lhe encontrei, onde você está?</h3>
+      <br>
+    </p>
+    <form>
+      <select class="form-control" name="cidade" id="cidade" style="width:100%;"></select>
+      <br>
+      <button type="button" name="button" class="botao" style="margin: 10px 0 0 40%;">Enviar</button>
+    </form>
+  </div>
+</div>
+
+<%= content_for :javascript do %>
+    <script type='text/javascript'>
+        $(function() {
+            $("#cidade").select2({
+                theme: 'bootstrap',
+                language: "pt-BR",
+                placeholder: 'Selecione',
+                ajax: {
+                    url: "<%= cidades_buscar_path %>",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            cidade: params.term,
+                        }
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 3
+            });
+        });
+
+
+        $("button").click(function() {
+            send_city()
+        });
+
+        var visita_id = <%= @visita.id %>;
+
+        function send_city() {
+            cidade = $("#cidade").val();
+
+            if(cidade) {
+                $.ajax({
+                    type: 'PATCH',
+                    url: '/create_by_city',
+                    data: { cidade: cidade, id: visita_id },
+                    success: function (position) {
+                        // Redirecionar para página 'Obrigado'.
+                        window.location = '<%= thanks_path %>'
+                    }
+                });
+            }
+            else{
+                alert("Pesquise abaixo por sua cidade...")
+            }
+        }
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrbu5vz973WwL_JhQBRtGx3O2-lkYabSg&callback=buildMap"></script>
+<% end %>
