@@ -6,7 +6,7 @@
       <br>
       <div class="row">
         <div class="col-lg-12 text-center">
-          <button type="button" name="button" class="botao">Participar</button>
+          <button id="btn-participate" type="button" name="button" class="botao">Participar</button>
         </div>
       </div>
     </div>
@@ -15,7 +15,7 @@
 
 <%= content_for :javascript do %>
   <script type='text/javascript'>
-    $("button").click(function(){
+    $("#btn-participate").click(function(){
       $("#location").html("<h3>Aguardando a localização...</h3>");
       getGeolocation();
     });
@@ -45,7 +45,13 @@
     }
 
     function searchCity() {
-        window.location = '<%= where_path @visita.id %>';
+      var form = $('<%=
+      form_for @visita, url: where_path, method: :post do |f|
+        f.hidden_field :id, value: @visita.id
+      end
+      %>');
+      $(document.body).append(form);
+      form.submit();
     }
 
     function send_location(lat, lng) {

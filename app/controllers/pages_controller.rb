@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   end
 
   def where
-    @visita = Visita.find(params[:id])
+    @visita = Visita.find(visita_params[:id])
   end
 
   def thanks
@@ -24,5 +24,9 @@ class PagesController < ApplicationController
 
   def results
     @visitas = Visita.all
+  end
+
+  def visita_params
+    params.require(:visita).permit(:id)
   end
 end

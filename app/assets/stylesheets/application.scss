@@ -112,6 +112,7 @@ h3 {
   -webkit-justify-content: center;
   justify-content: center;
   vertical-align:middle;
+  margin-bottom: 20px;
 }
 
 .rodape {
@@ -126,6 +127,7 @@ h3 {
   font-family: sans-serif;
   font-size: 20px;
   margin: 10px;
+  //margin-left: 19%;
   background-color: #eeeeee;
   padding: 10px;
   width: 90px;
@@ -201,4 +203,51 @@ ul.social-buttons li a:active {
 }
 .text-danger {
   color: #e74c3c;
+}
+#menu{
+  display: none;
+}
+.logo {
+  width: 19px;
+  float: left;
+  margin-top: -3px;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 425px) {
+  /* estilos */
+  .icons {
+    margin: 3.5%;
+    width: 50px !important;
+    height: 52px !important;
+  }
+  .rodape {
+    position: sticky;
+  }
+  #menu {
+    display: block;
+  }
+  #rodape {
+    display: none;
+  }
+  .wrapper {
+    height: auto;
+  }
+  .team-member {
+    padding-top: 10px;
+    padding-left: 25%;
+    padding-right: 25%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .team-member img {
+    height: 162px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .team-member img {
+    height: 130px;
+  }
 }

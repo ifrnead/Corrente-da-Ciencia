@@ -1,6 +1,5 @@
 class MessagesController < ApplicationController
   def new
-    @page_active = __method__
     @message = Message.new
   end
 
