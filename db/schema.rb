@@ -11,37 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161222201152) do
+ActiveRecord::Schema.define(version: 20161205233123) do
 
-  create_table "cidades", force: :cascade do |t|
-    t.integer  "codigo",     limit: 4
-    t.string   "nome",       limit: 255
-    t.integer  "estado_id",  limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "cidades", ["estado_id"], name: "index_cidades_on_estado_id", using: :btree
-
-  create_table "estados", force: :cascade do |t|
-    t.integer  "codigo",     limit: 4
-    t.string   "nome",       limit: 255
-    t.string   "sigla",      limit: 2
-    t.string   "pais",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "usuarios", force: :cascade do |t|
+  create_table "visitas", force: :cascade do |t|
     t.string   "ip",         limit: 255
     t.float    "latitude",   limit: 24
     t.float    "longitude",  limit: 24
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
     t.string   "cidade",     limit: 255
     t.string   "uf",         limit: 255
     t.string   "pais",       limit: 255
+    t.string   "fonte",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  add_foreign_key "cidades", "estados"
 end

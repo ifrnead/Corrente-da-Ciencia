@@ -1,40 +1,32 @@
 class PagesController < ApplicationController
-  def index
-    @page_active = __method__
-    #location = Geokit::Geocoders::IpGeocoder.geocode(@ip)
-    #if location.success
 
-    @user = Usuario.new
+  def index
+    location = Geokit::Geocoders::GoogleGeocoder.geocode(request.remote_ip)
+
+    @visita = Visita.create(ip: request.remote_ip, latitude: location.lat, longitude: location.lng, cidade: location.city, uf: location.state, pais: location.country_code, fonte: Visita::FONTES[:ip])
+  end
+
+  def where
+    @visita = Visita.find(visita_params[:id])
+  end
+
+  def thanks
+
   end
 
   def what
-    @page_active = __method__
+
   end
 
   def who
-    @page_active = __method__
+
   end
 
   def results
-    @page_active = __method__
-    @users = Usuario.all
-    @hash = Gmaps4rails.build_markers(@users) do |user, marker|
-      lat = user.latitude
-      lng = user.longitude
-      if lat && lng
-        marker.lat lat
-        marker.lng lng
-      end
-    end
+    @visitas = Visita.all
   end
 
-  def contact
-    @page_active = __method__
-
-    # TODO Send email
-    # name = params['name']
-    # email = params['email']
-    # phone = params['phone']
-    # message = params['message']
+  def visita_params
+    params.require(:visita).permit(:id)
   end
 end

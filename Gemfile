@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
 
+gem 'ffi'
 gem 'bootstrap_form'
 # Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
 gem 'select2-rails'
-# Gmaps4rails is developed to simply create a Google Map with overlays
-gem 'gmaps4rails'
 # Geocoder is a complete geocoding solution for Ruby
 gem 'geocoder'
+gem 'rest-client'
 gem 'geokit-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.1'

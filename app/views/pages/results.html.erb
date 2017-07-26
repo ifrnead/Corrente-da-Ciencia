@@ -2,16 +2,30 @@
   <div id="map"></div>
 </div>
 
-<% content_for :javascript do %>
-    <script type='text/javascript'>
-        $(document).ready()
-        {
-            handler = Gmaps.build('Google');
-            handler.buildMap({ provider: {}, internal: {id: 'map'} }, function(){
-                markers = handler.addMarkers(<%= raw @hash.to_json %>);
-                handler.bounds.extendWith(markers);
-                handler.fitMapToBounds();
-            });
-        };
-    </script>
+<%= content_for :javascript do %>
+  <script type='text/javascript'>
+    function buildMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: { lat: -15.7942, lng: -47.8825 } // Brasília
+        });
+
+        var locations = [
+          <% @visitas.each do |visita| %>
+            { lat: <%= visita.latitude %>, lng: <%= visita.longitude %> },
+          <% end %>
+        ];
+
+        var markers = locations.map(function(location) {
+          return new google.maps.Marker({
+            position: location
+          });
+        });
+
+        var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+      }
+  </script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrbu5vz973WwL_JhQBRtGx3O2-lkYabSg&callback=buildMap"></script>
 <% end %>

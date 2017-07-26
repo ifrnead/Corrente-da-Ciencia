@@ -1,239 +1,71 @@
-<div class="container-map">
-  <div id="map"></div>
-</div>
-
-<!--
-Caro visitante, este projeto de pesquisa, denominado *Corrente da Ciência*,
-visa o monitoramento e análise de dados da propagação de "correntes" em redes sociais,
-com ênfase inicial no What'sApp. Para isso, é muito importante que você permita a coleta
-da geolocalização (caixa de diálogo que aparecerá a seguir).
-
-Assim, será possível gerar um mapa que ilustre a disseminação dessa mensagem.</p>
-
-Certos de vossa compreensão, agradecemos a participação nesta pesquisa!
--->
-
-<!-- Modal -->
-<div class="modal fade in" id="myModalError" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Se você não deseja compartilhar a sua localização exata...</h4>
-      </div>
-      <div class="modal-body">
-        <p></p>
-        <p>...então, por favor, nos informe seu estado e sua cidade:</p>
-        <p></p>
-        <%= bootstrap_form_for @user do |f| %>
-            <%= f.select :estado_id,
-                                 Estado.all.collect{ |e| [ "#{e.nome} - #{e.sigla}", e.id ] },
-                                 {prompt: "Selecione um estado...", selected: '', label: 'Estado *'},
-                                 {onChange: 'javascript: verificar_estado();'} %>
-            <br>
-            <%= f.select :cidade_id,
-                                 {},
-                                 {prompt: "Selecione uma cidade...", selected: '', label: 'Cidade *'},
-                                 {disable: true, onChange: 'javascript: verificar_cidade();'} %>
-        <% end %>
-      </div>
-      <div class="modal-footer">
-        <button id="modal-error-go" type="button" class="btn btn-primary" data-dismiss="modal" disabled>Continuar</button>
-        <button id="modal-error-not" type="button" class="btn btn-danger" data-dismiss="modal">Não informar
-        </button>
+<div class="wrapper">
+  <div class="painel">
+    <h1>Corrente da Ciência</h1>
+    <div id="location">
+      <h3>Participe enviando sua localização!</h3>
+      <br>
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <button id="btn-participate" type="button" name="button" class="botao">Participar</button>
+        </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<% content_for :javascript do %>
-    <script type='text/javascript'>
-        var handler = Gmaps.build('Google');
-        $(document).ready()
-        {
-            buildMap();
-        };
+<%= content_for :javascript do %>
+  <script type='text/javascript'>
+    $("#btn-participate").click(function(){
+      $("#location").html("<h3>Aguardando a localização...</h3>");
+      getGeolocation();
+    });
 
-        function initModal(modal) {
-            modal.modal({backdrop: 'static', keyboard: false}).modal('show');
+    options = {
+      maximumAge: 600000 // 10 minutos
+    };
+
+    function getGeolocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var location = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          send_location(location.lat, location.lng);
+        }, function(err) {
+          // Redirecionar para página 'Onde'.
+          searchCity();
+        }, options);
+      } else {
+        // Browser doesn't support Geolocation
+        // Redirecionar para página 'Onde'.
+        searchCity();
+      }
+    }
+
+    function searchCity() {
+      var form = $('<%=
+      form_for @visita, url: where_path, method: :post do |f|
+        f.hidden_field :id, value: @visita.id
+      end
+      %>');
+      $(document.body).append(form);
+      form.submit();
+    }
+
+    function send_location(lat, lng) {
+      $.ajax({
+        type: 'PATCH',
+        url: '/create_by_location',
+        data: { lat: lat, lng: lng, id: <%= @visita.id %> },
+        success: function (data) {
+          // Redirecionar para página 'Obrigado'.
+          window.location = '<%= thanks_path %>';
         }
+      });
+    }
 
-        var latlng, geoOptions = {
-            timeout: 7000 // Wait 5 seconds
-        };
-
-        function buildMap() {
-            handler.buildMap({internal: {id: 'map'}}, function () {
-                // be aware chrome >= 50 requires https for geolocation to work
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(displayOnMap, showError, geoOptions);
-
-                    if ( navigator.userAgent.indexOf("Firefox") != -1 ) {
-                        // function fail never called if user declines to share geolocation in firefox
-                        setTimeout(function () {
-                            if (!latlng) {
-                                window.console.log("No confirmation from user, using fallback");
-                                showError();
-                            } else {
-                                window.console.log("Location was set");
-                            }
-                        }, geoOptions.timeout + 1000);
-                    }
-                } else {
-                    alert("Ops... A geolocalização não é suportada por este navegador.");
-                }
-            });
-        }
-
-        function displayOnMap(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
-
-            latlng = {lat: lat, lng: lng};
-
-            $('#footer-lat').text(lat);
-            $('#footer-lng').text(lng);
-
-            var marker = handler.addMarker({
-                lat: lat,
-                lng: lng
-            });
-            handler.map.centerOn(marker);
-            //handler.bounds.extendWith(markers);
-            //handler.fitMapToBounds();
-
-            $.ajax({
-                type: 'GET',
-                url: '/location',
-                data: { lat: lat, lng: lng },
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                    data = data['data'];
-                    var city = data['city'];
-                    city += " - " + data['uf']
-                    var country = data['country'];
-                    $('#footer-city').text(city);
-                    $('#footer-country').text(country);
-
-                    redirectToResults(true);
-                },
-                error: alertErrors
-            }).done(alertDone);
-        }
-
-        function showError(error) {
-            var modal = $('#myModalError');
-            initModal(modal);
-
-            $('#modal-error-go').click(function (evt) {
-                estado_id = $("#usuario_estado_id").val();
-                cidade_id = $("#usuario_cidade_id").val();
-                //console.log(cidade_id);
-                $.ajax({
-                    type: 'POST',
-                    url: '/cidade',
-                    data: JSON.stringify({usuario: {city: cidade_id, uf: estado_id}}),
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data) {
-                        //console.log(data);
-                        if (data) {
-                            redirectToResults(false);
-                        }
-                    },
-                    error: alertErrors
-                }).done(alertDone);
-            });
-
-            modal.on('hidden.bs.modal', function () {
-                // Change to results
-                redirectToResults(false)
-            });
-        }
-
-        function verificar_estado() {
-            //alert("Verifica estado!");
-            estado = $("#usuario_estado_id");
-            estado_id = estado.val();
-            if(estado_id != -1) {
-                // Se o estado for selecionado.
-                estado.attr('disabled', 'disabled');
-                getCities(estado_id);
-                $('#modal-error-not').prop('disabled', true);
-                //cidade_id = $("#usuario_cidade_id");
-            } else {
-                estado.attr('disabled', false);
-            }
-        }
-
-        function verificar_cidade() {
-            //alert("Verifica cidade!");
-            cidade_id = $("#usuario_cidade_id");
-            if(cidade_id.val() != -1) {
-                // Se a cidade for selecionado.
-                cidade_id.attr('disabled', 'disabled');
-                $('#modal-error-go').prop('disabled', false);
-            } else {
-                cidade_id.attr('disabled', false);
-            }
-        }
-
-        function getCities(estado_id) {
-            cidades = $("#usuario_cidade_id");
-            cidades.select2({
-                theme: 'bootstrap',
-                language: "pt-BR",
-                ajax: {
-                    url: "<%= cidades_path %>",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term,
-                            estado_id: estado_id,
-                            page: params.page
-                        }
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.nome,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-                minimumInputLength: 3
-            });
-
-            cidades.next().addClass('form-control');
-        }
-
-        function redirectToResults(wait) {
-            url = '<%= results_path %>';
-            if (wait){
-              var delay = 5000; //Your delay in milliseconds
-              setTimeout(function(){ window.location.href = url; }, delay);
-            } else{
-                window.location.href = url;
-            }
-        }
-
-        function alertErrors(xhr) {
-            var errors = xhr.responseText; //$.parseJSON(xhr.responseText).errors;
-            alert(errors);
-        }
-
-        function alertDone(data) {
-            console.log(data);
-        }
-    </script>
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrbu5vz973WwL_JhQBRtGx3O2-lkYabSg&callback=buildMap"></script>
 <% end %>
