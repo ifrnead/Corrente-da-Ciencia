@@ -84,13 +84,12 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
+    mysql2 (0.4.5)
     netrc (0.11.0)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     nokogiri (1.6.8.1-x86-mingw32)
       mini_portile2 (~> 2.1.0)
-    pg (0.20.0)
-    pg (0.20.0-x86-mingw32)
     rack (1.6.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -182,7 +181,7 @@ DEPENDENCIES
   geokit-rails
   jbuilder (~> 2.0)
   jquery-rails
-  pg (= 0.20)
+  mysql2 (>= 0.3.13, < 0.5)
   rails (= 4.2.5.1)
   rest-client
   sass-rails (~> 5.0)

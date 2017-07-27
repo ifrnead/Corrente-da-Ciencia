@@ -13,19 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20161205233123) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "visitas", force: :cascade do |t|
-    t.string   "ip"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "cidade"
-    t.string   "uf"
-    t.string   "pais"
-    t.string   "fonte"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "ip",         limit: 255
+    t.float    "latitude",   limit: 24
+    t.float    "longitude",  limit: 24
+    t.string   "cidade",     limit: 255
+    t.string   "uf",         limit: 255
+    t.string   "pais",       limit: 255
+    t.string   "fonte",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end
