@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'puma', '~> 3.7'
 # gem 'ffi'
 gem 'bootstrap_form'
 # Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
