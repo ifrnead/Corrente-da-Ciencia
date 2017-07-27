@@ -40,13 +40,11 @@
 
   <%= yield %>
 
-  <div id="rodape" class="rodape">
-    <div class="icones-conteudo">
-      <button type="button" class="icons" onclick="location.href='<%= home_path %>'"><i class="fa fa-home" ></i><br>Home</button>
-      <button type="button" class="icons" onclick="location.href='<%= what_path %>'"><i class="fa fa-file-text"></i><br>Sobre</button>
-      <button type="button" class="icons" onclick="location.href='<%= who_path %>'"><i class="fa fa-users"></i><br>Equipe</button>
-      <button type="button" class="icons" onclick="location.href='<%= contact_path %>'"><i class="fa fa-envelope"></i><br>Contato</button>
-    </div>
+  <div class="row footer">
+    <%= home_link %>
+    <%= about_link %>
+    <%= team_link %>
+    <%= contact_link %>
   </div>
 
   <!-- Bootstrap -->

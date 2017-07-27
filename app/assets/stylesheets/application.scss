@@ -31,33 +31,19 @@ body {
   margin:0px;
 }
 
-h1 {
-  text-align: center;
-  font-family: sans-serif;
-  font-size: 32px;
-  //color: #555;
-}
-
-h3 {
-  text-align: center;
-  font-family: sans-serif;
-  margin-bottom: 35px;
-  font-size: 18.72px;
-  //color: #555;
+.share-buttons {
+  margin-top: 1em;
 }
 
 .botao {
   background-color: #1b7bf3;
   color: #fff;
-  font-size: 22px;
+  font-size: 1.8em;
   border-style: solid;
   border-color: #1477f1;
   border-radius: 10px;
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 0.5em 1em 0.5em 1em;
   box-shadow: 0px 4px 3px rgba(0,0,0,0.5);
-  //margin-left: 35%;
 }
 .botao:hover{
   box-shadow: 0px 5px 3px rgba(0,0,0,0.5);
@@ -70,7 +56,6 @@ h3 {
 
 .formulario{
   text-align: center;
-
 }
 
 #text-where {
@@ -86,20 +71,35 @@ h3 {
 }
 
 .painel {
-  //position: absolute;
-  width: 632px;
-  /* height: 250px; */
-  padding: 40px;
-  //top: 50%;
-  //left: 50%;
-  //margin-top: -200px;
-  //margin-left: -320px;
-  /* margin: -200px 0 0 -320px; */
+  padding: 2em;
   background-color: rgba(215, 225, 225, 0.7);
   border-style: solid;
   border-width: 1px;
   border-color: #cacaca;
   border-radius: 10px;
+}
+
+.painel h1 {
+  text-align: center;
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.painel h3 {
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
+.painel div.realizacao {
+  text-align: center;
+}
+
+.painel div.realizacao img {
+  width: 50%;
+}
+
+button#btn-send {
+  margin-top: 0.8em;
 }
 
 .wrapper {
@@ -115,40 +115,35 @@ h3 {
   margin-bottom: 20px;
 }
 
-.rodape {
+.footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   box-shadow: 0px 5px 7px rgba(0,0,0,0.3) inset;
+  padding: 1em;
+  text-align: center;
 }
 
-.icons {
-  font-family: sans-serif;
-  font-size: 20px;
-  margin: 10px;
-  //margin-left: 19%;
-  background-color: #eeeeee;
-  padding: 10px;
-  width: 90px;
-  height: 80px;
+.share-button {
+  font-size: 3em;
+  margin: 0.1em;
+  color: #333;
+  background-color: #eee;
+  padding: 0.5em 1em 0.5em 1em;
+  height: 1em;
   border-radius: 5px;
   border-style: solid;
   border: solid 1px #bbb;
   box-shadow: 0px 4px 3px rgba(0,0,0,0.5);
 }
-.icons:hover{
+.share-button:hover{
   background-color: #fafafa;
   box-shadow: 0px 5px 3px rgba(0,0,0,0.5);
 }
-.icons:active{
+.share-button:active{
   background-color: #ededed;
   box-shadow: 0px 2px 1px rgba(0,0,0,0.5);
-}
-.icones-conteudo{
-  width: 454px;
-  height: 100px;
-  margin: auto;
 }
 
 /* Dijon */
@@ -215,20 +210,11 @@ ul.social-buttons li a:active {
 }
 
 @media screen and (max-width: 425px) {
-  /* estilos */
-  .icons {
-    margin: 3.5%;
-    width: 50px !important;
-    height: 52px !important;
-  }
-  .rodape {
-    position: sticky;
+  .footer {
+    display:none;
   }
   #menu {
     display: block;
-  }
-  #rodape {
-    display: none;
   }
   .wrapper {
     height: auto;

@@ -1,9 +1,8 @@
 class ContactMailer < ApplicationMailer
-  default from: 'No Reply <noreply@yourdomain.com>'
-  default to: 'Your Name <your.email@yourdomain.com>'
+  default to: 'correntedaciencia@ifrn.edu.br'
 
   def new_email(message)
     @message = message
-    mail subject: "[Corrente da Ciência] Mensagem de: #{@message.name}"
+    mail subject: "[Corrente da Ciência] Mensagem de: #{@message.name}", from: message.email
   end
 end

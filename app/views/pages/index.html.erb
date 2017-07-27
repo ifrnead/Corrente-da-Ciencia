@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="painel">
+  <div class="painel col-md-5 col-sm-8">
     <h1>Corrente da Ciência</h1>
     <div id="location">
       <h3>Participe enviando sua localização!</h3>
@@ -35,23 +35,13 @@
           send_location(location.lat, location.lng);
         }, function(err) {
           // Redirecionar para página 'Onde'.
-          searchCity();
+          window.location = 'onde';
         }, options);
       } else {
         // Browser doesn't support Geolocation
         // Redirecionar para página 'Onde'.
-        searchCity();
+        window.location = 'onde';
       }
-    }
-
-    function searchCity() {
-      var form = $('<%=
-      form_for @visita, url: where_path, method: :post do |f|
-        f.hidden_field :id, value: @visita.id
-      end
-      %>');
-      $(document.body).append(form);
-      form.submit();
     }
 
     function send_location(lat, lng) {
@@ -61,11 +51,10 @@
         data: { lat: lat, lng: lng, id: <%= @visita.id %> },
         success: function (data) {
           // Redirecionar para página 'Obrigado'.
-          window.location = '<%= thanks_path %>';
+          window.location = 'obrigado';
         }
       });
     }
 
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrbu5vz973WwL_JhQBRtGx3O2-lkYabSg&callback=buildMap"></script>
 <% end %>

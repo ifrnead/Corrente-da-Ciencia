@@ -4,10 +4,15 @@ class PagesController < ApplicationController
     location = Geokit::Geocoders::GoogleGeocoder.geocode(request.remote_ip)
 
     @visita = Visita.create(ip: request.remote_ip, latitude: location.lat, longitude: location.lng, cidade: location.city, uf: location.state, pais: location.country_code, fonte: Visita::FONTES[:ip])
+    session[:visita_id] = @visita.id
   end
 
   def where
-    @visita = Visita.find(visita_params[:id])
+    if session[:visita_id]
+      @visita = Visita.find(session[:visita_id])
+    else
+      redirect_to home_path
+    end
   end
 
   def thanks
@@ -20,13 +25,5 @@ class PagesController < ApplicationController
 
   def who
 
-  end
-
-  def results
-    @visitas = Visita.all
-  end
-
-  def visita_params
-    params.require(:visita).permit(:id)
   end
 end
