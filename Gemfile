@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'ffi'
+# gem 'ffi'
 gem 'bootstrap_form'
 # Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
 gem 'select2-rails'
@@ -12,7 +12,7 @@ gem 'geokit-rails'
 gem 'rails', '4.2.5.1'
 # Use mysql as the database for Active Record
 # gem 'mysql2', '>= 0.3.13', '< 0.5'
-gem 'pg', '~> 0.18'
+gem 'pg', '0.20'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
