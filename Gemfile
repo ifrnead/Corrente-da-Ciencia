@@ -1,5 +1,8 @@
 source 'http://rubygems.org'
 
+ruby '2.3.1'
+gem "sentry-raven"
+
 gem 'puma', '~> 3.7'
 # gem 'ffi'
 gem 'bootstrap_form'
