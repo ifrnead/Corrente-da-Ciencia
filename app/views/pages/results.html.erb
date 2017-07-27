@@ -27,5 +27,5 @@
   </script>
   <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrbu5vz973WwL_JhQBRtGx3O2-lkYabSg&callback=buildMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.secrets.google_api_key %>&callback=buildMap"></script>
 <% end %>

@@ -2,7 +2,7 @@ class CidadesController < ApplicationController
 
   def buscar
     options = {
-      key: "AIzaSyDrbu5vz973WwL_JhQBRtGx3O2-lkYabSg",
+      key: Rails.application.secrets.google_api_key,
       language: 'pt-BR',
       types: '(cities)',
       input: params[:cidade]
