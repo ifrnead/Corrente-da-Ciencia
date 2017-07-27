@@ -1,5 +1,4 @@
 /.idea
-config/database.yml
 *.rbc
 capybara-*.html
 .rspec
