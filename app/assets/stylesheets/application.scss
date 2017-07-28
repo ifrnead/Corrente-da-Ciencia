@@ -35,6 +35,10 @@ body {
   margin-top: 1em;
 }
 
+.share-buttons div {
+  margin-bottom: 1em;
+}
+
 .botao {
   background-color: #1b7bf3;
   color: #fff;
@@ -52,22 +56,6 @@ body {
 .botao:active{
   box-shadow: 0px 2px 1px rgba(0,0,0,0.5);
   background-color: #1475ed;
-}
-
-.formulario{
-  text-align: center;
-}
-
-#text-where {
-  font-size: 32px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #cacaca;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0px 3px 5px rgba(0,0,0,0.3) inset;
-  color: #555;
-  text-align: center;
 }
 
 .painel {
@@ -102,6 +90,10 @@ button#btn-send {
   margin-top: 0.8em;
 }
 
+ul.nav li:hover {
+  background-color: #efefef;
+}
+
 .wrapper {
   height: 100%;
   min-height: 100%;
@@ -112,26 +104,12 @@ button#btn-send {
   -webkit-justify-content: center;
   justify-content: center;
   vertical-align:middle;
-  margin-bottom: 20px;
 }
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 5px 7px rgba(0,0,0,0.3) inset;
-  padding: 1em;
-  text-align: center;
-}
-
 .share-button {
-  font-size: 3em;
-  margin: 0.1em;
+  font-size: 3em !important;
+  width: 2.5em;
   color: #333;
   background-color: #eee;
-  padding: 0.5em 1em 0.5em 1em;
-  height: 1em;
   border-radius: 5px;
   border-style: solid;
   border: solid 1px #bbb;
@@ -154,15 +132,12 @@ button#btn-send {
 
 .team-member {
   text-align: center;
-  margin-bottom: 50px;
   float: left;
-  padding: 0px 10px 0px 10px;
+  padding: 0em 1em 0em 1em;
 }
 .team-member img {
   margin: 0 auto;
   border: 7px solid white;
-  width: 160px;
-  height: 175px;
 }
 .team-member h4 {
   margin-top: 25px;
@@ -199,9 +174,6 @@ ul.social-buttons li a:active {
 .text-danger {
   color: #e74c3c;
 }
-#menu{
-  display: none;
-}
 .logo {
   width: 19px;
   float: left;
@@ -212,9 +184,6 @@ ul.social-buttons li a:active {
 @media screen and (max-width: 425px) {
   .footer {
     display:none;
-  }
-  #menu {
-    display: block;
   }
   .wrapper {
     height: auto;

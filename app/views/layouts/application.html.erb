@@ -29,23 +29,16 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><%= link_to 'Home', home_path %></li>
-          <li><%= link_to 'Sobre', what_path %></li>
-          <li><%= link_to 'Equipe', who_path %></li>
-          <li><%= link_to 'Contato', contact_path %></li>
+          <li><%= home_link %></li>
+          <li><%= about_link %></li>
+          <li><%= team_link %></li>
+          <li><%= contact_link %></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 
   <%= yield %>
-
-  <div class="row footer">
-    <%= home_link %>
-    <%= about_link %>
-    <%= team_link %>
-    <%= contact_link %>
-  </div>
 
   <!-- Bootstrap -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
