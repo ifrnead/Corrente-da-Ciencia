@@ -1,11 +1,11 @@
 module ApplicationHelper
 
   def open_graph_meta_tags
-    tags = "<meta property=\"og:url\" content=\"https://ead.ifrn.edu.br/correntedaciencia\" />"
+    tags = "<meta property=\"og:url\" content=\"https://ead.ifrn.edu.br/projetos/correntedaciencia\" />"
     tags += "<meta property=\"og:type\" content=\"website\" />"
     tags += "<meta property=\"og:title\" content=\"Corrente da Ciência\" />"
     tags += "<meta property=\"og:description\" content=\"O Corrente da Ciência, desenvolvido pelo Campus EaD do IFRN, é um projeto de pesquisa que visa compreender como e quão rápido mensagens se propagam em aplicativos de mensagens e redes sociais.\" />"
-    tags += "<meta property=\"og:image\" content=\"#{image_url('og_image.png')}\" />"
+    tags += "<meta property=\"og:image\" content=\"#{image_url('og-image.png')}\" />"
     tags.html_safe
   end
 
