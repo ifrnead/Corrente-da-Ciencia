@@ -125,7 +125,7 @@ ul.nav li:hover {
   padding: 0em 1em 0em 1em;
   margin-bottom: 1em;
 }
-.team-member img {
+.team-member img.img-circle {
   margin: 0 auto;
   border: 7px solid white;
 }
@@ -136,30 +136,6 @@ ul.nav li:hover {
 }
 .team-member p {
   margin-top: 0;
-}
-
-ul.social-buttons {
-  margin-bottom: 0;
-}
-ul.social-buttons li a {
-  float: left;
-  display: block;
-  background-color: #222222;
-  height: 2em;
-  width: 2em;
-  border-radius: 100%;
-  font-size: 1.4em;
-  line-height: 2em;
-  color: white;
-  outline: none;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-}
-ul.social-buttons li a:hover,
-ul.social-buttons li a:focus,
-ul.social-buttons li a:active {
-  background-color: #95b771;
 }
 .text-danger {
   color: #e74c3c;

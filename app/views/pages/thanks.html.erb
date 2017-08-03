@@ -20,4 +20,39 @@
       <%= telegram_share_link %>
     </div>
   </div>
+  <div class="row">
+    <h3>Quer receber os resultados desse estudo?</h3>
+    <div class="col-xs-12">
+      <div class="alert alert-info" role="alert">E-mail cadastrado com sucesso!</div>
+      <div class="input-group">
+        <input type="text" id="email" class="form-control input-lg" placeholder="Digite seu e-mail">
+        <span class="input-group-btn">
+          <button class="btn btn-default btn-lg" type="button" id="send_btn">Enviar</button>
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
+
+<%= content_for :javascript do %>
+  <script type="text/javascript">
+    $(function() {
+      $(".alert").hide();
+      $(".has-error").removeClass('has-error');
+      $("#send_btn").click(function() {
+        if($("#email").val() == "") {
+          $(".input-group").addClass('has-error');
+          return;
+        }
+        $.post("<%= interessados_path %>", { interessado: { email: $("#email").val() } })
+          .done(function() {
+            $(".input-group").hide('fade');
+            $(".alert").show('fade');
+          })
+          .fail(function() {
+            $(".input-group").addClass('has-error');
+          });
+      });
+    });
+  </script>
+<% end %>

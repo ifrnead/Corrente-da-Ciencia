@@ -6,8 +6,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
 
-    if @message.valid?
-      ContactMailer.new_email(@message).deliver # Send email
+    if @message.save
       flash[:success] = 'Sua mensagem foi enviada com sucesso!'
       redirect_to contact_path
     else

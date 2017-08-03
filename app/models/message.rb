@@ -1,18 +1,8 @@
-class Message
+class Message < ActiveRecord::Base
+  validates :name, :email, :content, presence: true
+  after_create :send_email
 
-  include ActiveModel::Model
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
-
-  attr_accessor :name, :email, :content
-
-  validates :name,
-            presence: true
-
-  validates :email,
-            presence: true
-
-  validates :content,
-            presence: true
-
+  def send_email
+    ContactMailer.new_email(self).deliver
+  end
 end

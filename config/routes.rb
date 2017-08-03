@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   get 'cidades/buscar' => 'cidades#buscar'
 
+  post 'interessados' => 'interessados#create'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
