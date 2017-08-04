@@ -2,7 +2,7 @@ module PagesHelper
 
   URL = "https://ead.ifrn.edu.br/projetos/correntedaciencia".freeze
   MENSAGEM_PADRAO = "Participe do Corrente da Ciência, um projeto conduzido pelo Campus EaD do IFRN, que visa compreender como e o quão rápido mensagens se propagam em redes sociais e em aplicativos de mensagens. Contribua com o projeto compartilhando a sua localização de forma anônima e segura: #{URL}".freeze
-  MENSAGEM_TWITTER = "Contribua com o projeto Corrente da Ciência do IFRN/EaD: #{URL}".freeze
+  MENSAGEM_TWITTER = "Participe do Corrente da Ciência, um projeto que visa compreender como e o quão rápido msgs se propagam na Internet: #{URL}".freeze
 
   def facebook_share_link
     "<a href=\"http://www.facebook.com/sharer.php?u=#{URL}\" class=\"btn btn-default share-button\" target=\"_blank\"><i class=\"fa fa-facebook\"></i></a>".html_safe
