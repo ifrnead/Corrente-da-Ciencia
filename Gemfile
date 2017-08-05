@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.3.4'
 gem "sentry-raven"
 
 gem 'puma', '~> 3.7'
