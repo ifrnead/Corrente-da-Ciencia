@@ -5,6 +5,7 @@ ruby '2.3.4'
 gem "sentry-raven"
 gem "asset_sync"
 gem "fog-aws"
+gem "actionpack-page_caching"
 
 gem 'puma', '~> 3.7'
 # gem 'ffi'

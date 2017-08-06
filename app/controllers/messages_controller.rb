@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  caches_page :new
+  
   def new
     @message = Message.new
   end
