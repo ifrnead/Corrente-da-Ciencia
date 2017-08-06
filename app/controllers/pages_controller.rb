@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  caches_page :thanks, :what, :who
 
   def index
     location = Geokit::Geocoders::GoogleGeocoder.geocode(request.remote_ip)
