@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   caches_page :new
-  
+
   def new
     @message = Message.new
   end
@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
 
     if @message.save
       flash[:success] = 'Sua mensagem foi enviada com sucesso!'
-      redirect_to contact_path
+      redirect_to contact_url
     else
       flash[:danger] = 'Um erro ocorreu ao enviar esta mensagem.'
       render :new

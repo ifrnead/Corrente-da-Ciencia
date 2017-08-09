@@ -12,7 +12,7 @@ class PagesController < ApplicationController
     if session[:visita_id]
       @visita = Visita.find(session[:visita_id])
     else
-      redirect_to home_path
+      redirect_to home_url
     end
   end
 

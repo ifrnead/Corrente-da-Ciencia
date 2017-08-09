@@ -44,7 +44,7 @@
           $(".input-group").addClass('has-error');
           return;
         }
-        $.post("<%= interessados_path %>", { interessado: { email: $("#email").val() } })
+        $.post("<%= interessados_url %>", { interessado: { email: $("#email").val() } })
           .done(function() {
             $(".input-group").hide('fade');
             $(".alert").show('fade');
