@@ -48,7 +48,7 @@
           if(cidade) {
               $.ajax({
                   type: 'PATCH',
-                  url: '/create_by_city',
+                  url: "<%= fix_path(create_by_city_path) %>",
                   data: { cidade: cidade, id: <%= @visita.id %> },
                   success: function (position) {
                       // Redirecionar para página 'Obrigado'.

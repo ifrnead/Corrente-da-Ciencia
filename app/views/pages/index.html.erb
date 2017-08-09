@@ -33,23 +33,23 @@
           send_location(location.lat, location.lng);
         }, function(err) {
           // Redirecionar para página 'Onde'.
-          window.location = 'onde';
+          window.location = "<%= fix_path(where_path) %>";
         }, options);
       } else {
         // Browser doesn't support Geolocation
         // Redirecionar para página 'Onde'.
-        window.location = 'onde';
+        window.location = "<%= fix_path(where_path) %>";
       }
     }
 
     function send_location(lat, lng) {
       $.ajax({
         type: 'PATCH',
-        url: '/create_by_location',
+        url: "<%= fix_path(create_by_location_path) %>",
         data: { lat: lat, lng: lng, id: <%= @visita.id %> },
         success: function (data) {
           // Redirecionar para página 'Obrigado'.
-          window.location = 'obrigado';
+          window.location = "<%= fix_path(thanks_path) %>";
         }
       });
     }
