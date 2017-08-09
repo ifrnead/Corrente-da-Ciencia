@@ -17,7 +17,7 @@
               language: "pt-BR",
               placeholder: 'Selecione',
               ajax: {
-                  url: "<%= cidades_buscar_url %>",
+                  url: "<%= fix_path(cidades_buscar_path) %>",
                   dataType: 'json',
                   delay: 250,
                   data: function(params) {
@@ -52,7 +52,7 @@
                   data: { cidade: cidade, id: <%= @visita.id %> },
                   success: function (position) {
                       // Redirecionar para página 'Obrigado'.
-                      window.location = '<%= thanks_url %>'
+                      window.location = '<%= fix_path(thanks_path) %>'
                   }
               });
           }

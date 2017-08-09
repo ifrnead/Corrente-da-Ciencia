@@ -1,5 +1,13 @@
 module ApplicationHelper
 
+  def fix_path(path)
+    if Rails.env.production?
+      "/projetos/correntedaciencia#{path}"
+    else
+      path
+    end
+  end
+
   def open_graph_meta_tags
     tags = "<meta property=\"og:url\" content=\"https://ead.ifrn.edu.br/projetos/correntedaciencia\" />"
     tags += "<meta property=\"og:type\" content=\"website\" />"
@@ -10,19 +18,19 @@ module ApplicationHelper
   end
 
   def home_link
-    "<a href=\"#{ home_url }\"><i class=\"fa fa-home\"></i> Home</a>".html_safe
+    "<a href=\"#{ fix_path(home_path) }\"><i class=\"fa fa-home\"></i> Home</a>".html_safe
   end
 
   def about_link
-    "<a href=\"#{ what_url }\"><i class=\"fa fa-file-text\"></i> O que é?</a>".html_safe
+    "<a href=\"#{ fix_path(what_path) }\"><i class=\"fa fa-file-text\"></i> O que é?</a>".html_safe
   end
 
   def team_link
-    "<a href=\"#{ who_url }\"><i class=\"fa fa-users\"></i> Quem somos?</a>".html_safe
+    "<a href=\"#{ fix_path(who_path) }\"><i class=\"fa fa-users\"></i> Quem somos?</a>".html_safe
   end
 
   def contact_link
-    "<a href=\"#{ contact_url }\"><i class=\"fa fa-envelope\"></i> Contato</a>".html_safe
+    "<a href=\"#{ fix_path(contact_path) }\"><i class=\"fa fa-envelope\"></i> Contato</a>".html_safe
   end
 
 end
