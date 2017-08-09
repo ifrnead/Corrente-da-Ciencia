@@ -5,6 +5,14 @@ class ApplicationController < ActionController::Base
 
   before_action :set_raven_context
 
+  def fix_path(path)
+    if Rails.env.production?
+      "/projetos/correntedaciencia#{path}"
+    else
+      path
+    end
+  end
+
   private
 
   def set_raven_context
