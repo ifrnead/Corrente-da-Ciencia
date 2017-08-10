@@ -6,6 +6,7 @@ gem "sentry-raven"
 gem "asset_sync"
 gem "fog-aws"
 gem "actionpack-page_caching"
+gem 'simple_form'
 
 gem 'puma', '~> 3.7'
 # gem 'ffi'
