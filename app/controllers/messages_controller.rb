@@ -9,10 +9,8 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.save
-      flash[:success] = 'Sua mensagem foi enviada com sucesso!'
-      redirect_to fix_path(contact_path)
+      redirect_to fix_path(contact_path), notice: 'Sua mensagem foi enviada com sucesso!'
     else
-      flash[:danger] = 'Um erro ocorreu ao enviar esta mensagem.'
       render :new
     end
   end
