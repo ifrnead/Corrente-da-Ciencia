@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'pages#index', as: 'home'
+  get 'geolocation' => 'pages#geolocation', as: 'geolocation'
   get 'onde' => 'pages#where', as: 'where'
   get 'obrigado' => 'pages#thanks', as: 'thanks'
   get 'o-que-e' => 'pages#what', as: 'what'

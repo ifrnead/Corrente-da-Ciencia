@@ -16,6 +16,14 @@ class PagesController < ApplicationController
     end
   end
 
+  def geolocation
+    if session[:visita_id]
+      @visita = Visita.find(session[:visita_id])
+    else
+      redirect_to fix_path(home_path)
+    end
+  end
+
   def thanks
 
   end
