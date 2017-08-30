@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'obrigado' => 'pages#thanks', as: 'thanks'
   get 'o-que-e' => 'pages#what', as: 'what'
   get 'quem-somos' => 'pages#who', as: 'who'
-  # get 'resultados' => 'pages#results', as: 'results'
+  get 'resultados' => 'pages#results', as: 'results'
   get 'contato', to: 'messages#new', as: 'contact'
   post 'contato', to: 'messages#create'
 
