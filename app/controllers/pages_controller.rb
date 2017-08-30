@@ -35,4 +35,8 @@ class PagesController < ApplicationController
   def who
 
   end
+
+  def results
+    @visitas = Visita.all
+  end
 end
